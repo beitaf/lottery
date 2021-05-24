@@ -1,0 +1,117 @@
+#app {
+  height: 100%;
+}
+.w-top {
+  display: flex;
+  height: 36px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background: #DCDFE6;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.layout {
+  width: 60px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+}
+
+.content-one {
+  display: flex;
+}
+.block-one {
+  flex: 1;
+  border: 1px solid #DCDFE6;
+  border-left: none;
+  padding: 10px 8px;
+}
+.block-two {
+  flex: 1;
+  border: 1px solid #DCDFE6;
+  border-right: none;
+  padding: 10px 8px;
+}
+.row {
+  display: flex;
+}
+.row-time {
+  align-items: center;
+}
+.row label {
+  display: inline-block;
+  padding-right: 20px;
+  text-align: right;
+  width: 100px;
+  margin-top: 10px;
+}
+.row-time label {
+  margin-top: 0;
+}
+.row .el-button {
+  margin-bottom: 4px;
+  width: 44px;
+  text-align: center;
+  padding: 13px 0;
+  font-size: 14px;
+  box-shadow: 1px 1px 0px #ccc;
+}
+.row-time .el-button {
+  margin: 0;
+}
+.content-two {
+  padding: 10px;
+  border-bottom: 1px solid #DCDFE6;
+  border-right: 1px solid #DCDFE6;
+}
+.content-three {
+  padding: 10px;
+}
+.content {
+  display: flex;
+}
+.content-box {
+  flex: 1;
+}
+.operate-box {
+  width: 250px;
+  padding-top: 20px;
+  padding-left: 10px;
+}
+
+.total {
+  margin: 10px 0;
+  font-size: 14px;
+}
+.text-box {
+  display: block;
+  height: calc(100vh - 160px);
+  width: 200px;
+  resize: none;
+  overflow: auto;
+  box-sizing: border-box;
+  border: 1px solid #E4E7ED;
+  padding: 15px 20px;
+  line-height: 20px;
+  background: #fff;
+}
+.blockFour-text-box{
+  display: block;
+  width: 530px;
+  resize: none;
+  height: 220px;
+  overflow: auto;
+  box-sizing: border-box;
+  border: 1px solid #E4E7ED;
+  padding: 15px 20px;
+  line-height: 20px;
+  background: #fff;
+}
+.operate-box .el-button--mini{
+  padding:10px 15px;
+}

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="no-referrer" />
+  <title>lottery</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="renderer" content="webkit">
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/index.css">
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+
+<body>
+  <div id="app">
+    <header class="w-top">
+      <div class="title">这是导航</div>
+      <el-button @click="layout" size="mini">退出</el-button>
+    </header>
+    <div class="content">
+      <div class="content-box">
+        <div class="content-one">
+          <div class="block-one">
+            <div class="row" v-for="(item, index) in blockOne" :key="index">
+              <template v-if="'first_pc' === item.key || 'first_eo' === item.key">
+                <label v-html="item.label"></label>
+                <el-button v-for="(num, ind) in item.list" :type="num.select ? 'danger' : ''" :key="ind"
+                @click="radioSelect(num, item.list, item.key, '', item.timeList)">{{ num.label }}</el-button>
+                <template v-if="item.timeList">
+                  <label>出 &nbsp;&nbsp;&nbsp;&nbsp; 现</label>
+                  <el-button v-for="(snum, inds) in item.timeList" :type="snum.select ? 'danger' : ''"
+                  :key="item.list.length+inds" @click="radioSelect(snum, item.timeList, item.key + '_times', '', 'times')" :disabled="snum.disabled">{{
+                  snum.label }}</el-button>
+                </template>
+              </template>
+              <template v-else>
+                <label v-html="item.label"></label>
+                <el-button v-for="(num, ind) in item.list" :type="num.select ? 'danger' : ''" :key="ind" :style="item.list.length - 1 === ind ? 'margin-right: 12px;' : ''"
+                  @click="selectItem(num, item,item.key)">{{ num.label }}</el-button>
+                <template v-if="item.timeList">
+                  <label style="width: 87px;">出 &nbsp;&nbsp;&nbsp;&nbsp; 现</label>
+                  <el-button  v-for="(snum, inds) in item.timeList" :type="snum.select ? 'danger' : ''"
+                  :key="item.list.length+inds"  @click="selectBalance(item.timeList)" :disabled="snum.disabled">{{ snum.label }}</el-button>
+                </template>
+              </template>
+              <el-button type="info" style="margin-left: auto;" @click="clearItem(item)">清</el-button>
+            </div>
+            <div class="row">
+
+            </div>
+          </div>
+          <div class="block-two">
+            <div class="row" v-for="(item, index) in blockTwo" :key="index">
+              <label>{{ item.label }}</label>
+              <el-button v-for="(num, ind) in item.list" :type="num.select ? 'danger' : ''" :key="ind"
+                @click="selectItem(num, item, '', true)">{{ num.label }}</el-button>
+              <el-button type="info" style="margin-left: auto;" @click="clearItem(item)">清</el-button>
+            </div>
+            <div class="row row-time">
+              <label>出 &nbsp;&nbsp;&nbsp;&nbsp; 现</label>
+              <el-button v-for="(num, ind) in timesList" :type="num.select ? 'danger' : ''" :key="ind"
+                @click="selectItem(num, '', 'times')" :disabled="num.disabled">{{ num.label }}</el-button>
+              <el-button type="info" style="margin-left: auto;" @click="clearItem('times')">清</el-button>
+            </div>
+          </div>
+        </div>
+        <div class="content-two">
+          <div class="row" v-for="(item, index) in blockThree" :key="index">
+            <label>胆{{ index + 1 }}</label>
+            <el-button v-for="(dan, ind) in item.list" :type="dan.select ? 'danger' : ''" :key="ind"
+              @click="danListSelect(dan, index, 0)">{{ dan.label }}</el-button>
+            <label>出 &nbsp;&nbsp;&nbsp;&nbsp; 现</label>
+            <el-button v-for="(num, inds) in item.timeList" :type="num.select ? 'danger' : ''"
+              :key="item.list.length+inds" @click="danListSelect(num, index, 1)" :disabled="num.disabled">{{ num.label
+              }}</el-button>
+            <el-button type="info" style="margin-left: auto;" @click="danClear(index)">清</el-button>
+          </div>
+          <!-- <div class="row">
+            <label>上期中奖号码</label>
+            <el-button v-for="(dan, ind) in lastList.list" :type="dan.select ? 'danger' : ''" :key="ind"
+              @click="danListSelect(dan, 0, 0, 'last')">{{ dan.label }}</el-button>
+            <label>出 &nbsp;&nbsp;&nbsp;&nbsp; 现</label>
+            <el-button v-for="(num, inds) in lastList.timeList" :type="num.select ? 'danger' : ''"
+              :key="lastList.list.length+inds" @click="danListSelect(num, 0, 1, 'last')" :disabled="num.disabled">{{
+              num.label }}</el-button>
+            <el-button type="info" style="margin-left: auto;" @click="danClear(0, 'last')">清</el-button>
+          </div> -->
+          <div class="row">
+            <label>和值</label>
+            <el-button v-for="(num, ind) in totalList" :type="num.select ? 'danger' : ''" :key="ind"
+              @click="sumSelect(num)">{{ sum + num.value }}</el-button>
+            <el-button type="info" style="margin-left: 40px;" @click="clearItem('total')">清</el-button>
+          </div>
+
+        </div>
+        <div class="content-three">
+          <div class="row" v-for="(item, index) in blockFour" :key="index">
+            <label>{{ item.label }}</label>
+            <el-button v-for="(num, ind) in item.list" :type="num.select ? 'danger' : ''" :key="ind"
+            @click="radioSelect(num, item.list, item.key, 'success_counts')">{{ num.label }}</el-button>
+            <el-button type="info" style="margin-left: auto;" @click="danClear(index)">清</el-button>
+          </div>
+          <div class="row">
+            <label></label>
+            <textarea class="blockFour-text-box" v-model="blockFourText" disabled></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="operate-box">
+        <el-button size="mini" @click="createLottery">生成</el-button>
+        <el-button size="mini" id="copy" @click="clipboardContent" data-clipboard-action="copy" data-clipboard-target="#resultText">复制</el-button>
+        <el-button size="mini" @click="clearAll">删除</el-button>
+        <p class="total">合计: {{ dataTotal }} 条</p>
+        <textarea class="text-box" v-model="resultText" disabled></textarea>
+        <textarea class="text-box" v-model="resultText" id="resultText" style="opacity: 0;position: absolute;z-index: -99999;width: 0;height: 0;"></textarea>
+      </div>
+    </div>
+  </div>
+  <script src="./js/vue.js"></script>
+  <script src="./js/el-index.js"></script>
+  <script src="./js/axios.min.js"></script>
+  <script src="./js/clipboard.min.js"></script>
+  <script type="text/javascript" src="./js/index.js"></script>
+</body>
+
+</html>
