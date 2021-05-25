@@ -640,24 +640,24 @@ window.onload = () => {
           this.balance_times = []
         }
       },
-      danClear(index, type='') {
-        if(type) {
+      danClear(index, dan=false) {
+        if(dan) {
           // this.total_filter = [[], []]
-          for (let i = 0, len = this.lastList.list.length; i < len; i++) {
-            this.lastList.list[i].select = false
-          }
-          for (let i = 0, len = this.lastList.timeList.length; i < len; i++) {
-            this.lastList.timeList[i].select = false
-            this.lastList.timeList[i].disabled = true
+          // for (let i = 0, len = this.lastList.list.length; i < len; i++) {
+          //   this.lastList.list[i].select = false
+          // }
+          // for (let i = 0, len = this.lastList.timeList.length; i < len; i++) {
+          //   this.lastList.timeList[i].select = false
+          //   this.lastList.timeList[i].disabled = true
+          // }
+          for (let i = 0, len = this.blockFour[index].list.length; i < len; i++) {
+            this.blockFour[index].list[i].select = false
+            this.success_counts = []
           }
         } else {
           this.filter_where[index] = [[], []]
           for (let i = 0, len = this.blockThree[index].list.length; i < len; i++) {
             this.blockThree[index].list[i].select = false
-          }
-          for (let i = 0, len = this.blockFour[index].list.length; i < len; i++) {
-            this.blockFour[index].list[i].select = false
-            this.success_counts = []
           }
           for (let i = 0, len = this.blockThree[index].timeList.length; i < len; i++) {
             this.blockThree[index].timeList[i].select = false

@@ -103,7 +103,7 @@
             <label>{{ item.label }}</label>
             <el-button v-for="(num, ind) in item.list" :type="num.select ? 'danger' : ''" :key="ind"
             @click="radioSelect(num, item.list, item.key, 'success_counts')">{{ num.label }}</el-button>
-            <el-button type="info" style="margin-left: auto;" @click="danClear(index)">清</el-button>
+            <el-button type="info" style="margin-left: auto;" @click="danClear(index, true)">清</el-button>
           </div>
           <div class="row">
             <label></label>
